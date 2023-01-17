@@ -11,7 +11,7 @@ slowest_time = 0
 print("Park Run Timer\n~~~~~~~~~~~~~~\n\nLet's go!")
 while True:
   line = input("> ")
-  if line == "END":
+  if line.upper() == "END":
     break
 
   # Spliting the line into the runner number and time
@@ -42,13 +42,23 @@ if total_runners == 0:
   print("No data found. Nothing to do. What a pity.")
   sys.exit()
 else:
-  average_time = total_time / total_runners
+  average_time = total_time // total_runners
 
 # Converting times to minutes and seconds
 def to_minutes_seconds(time):
-  minutes = time // 60
-  seconds = time % 60
-  return f"{minutes} minutes, {seconds} seconds"
+    minutes, seconds = divmod(time, 60)
+    if minutes == 1:
+        minutes_label = "minute"
+    else:
+        minutes_label = "minutes"
+    if seconds == 1:
+        seconds_label = "second"
+    else:
+        seconds_label = "seconds"
+    if minutes == 0:
+        return f"{seconds} {seconds_label}"
+    else:
+        return f"{minutes} {minutes_label}, {seconds} {seconds_label}"
 
 fastest_time = to_minutes_seconds(fastest_time)
 slowest_time = to_minutes_seconds(slowest_time)
